@@ -52,27 +52,31 @@ namespace ToDo
             {
                 Console.WriteLine("Ingrese el número de la tarea a remover: ");
                 // Show current taks
-                for (int i = 0; i < TaskList.Count; i++)
-                {
-                    Console.WriteLine((i + 1) + ". " + TaskList[i]);
-                }
-                Console.WriteLine("----------------------------------------");
+                ShowMenuTaskList();
 
                 string taskNumberToDelete = Console.ReadLine();
                 // Remove one position
                 int indexToRemove = Convert.ToInt32(taskNumberToDelete) - 1;
-                if (indexToRemove > -1)
+
+                if (indexToRemove > (TaskList.Count - 1) || indexToRemove < 0)
+                    Console.WriteLine("Numero de tarea seleccionado no es valido.");
+
+                else
                 {
-                    if (TaskList.Count > 0)
+
+                    if (indexToRemove > -1 && TaskList.Count > 0)
                     {
+
                         string taskToRemove = TaskList[indexToRemove];
                         TaskList.RemoveAt(indexToRemove);
                         Console.WriteLine("Tarea " + taskToRemove + " eliminada");
+
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine("Ha ocurrido un error al eliminar la tarea");
             }
         }
 
@@ -95,14 +99,13 @@ namespace ToDo
             if (TaskList == null || TaskList.Count == 0)
             {
                 Console.WriteLine("No hay tareas por realizar");
-            } 
+            }
             else
             {
                 Console.WriteLine("----------------------------------------");
-                for (int i = 0; i < TaskList.Count; i++)
-                {
-                    Console.WriteLine((i + 1) + ". " + TaskList[i]);
-                }
+                var indexTask = 1;
+                TaskList.ForEach(p => Console.WriteLine(indexTask++ + ". " + p));
+
                 Console.WriteLine("----------------------------------------");
             }
         }
